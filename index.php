@@ -1,12 +1,6 @@
 <?php
-
     require_once('db.php');
-    get_items();
-
-
 ?>
-
-
 <!DOCTYPE html>
 <!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -15,13 +9,10 @@
 <head>
     <meta charset="utf-8">
     <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
-    <title>Circle by templatemo</title>
+    <title>ART DUET</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
-    <!--
-    Circle Template
-    http://www.templatemo.com/preview/templatemo_410_circle
-    -->
+
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet">
 
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -117,8 +108,20 @@
                             </div>
                         </div> <!-- /.col-md-12 -->
                     </div> <!-- /.row -->
-
                     <div class="row">
+                    <?
+                      $masters = get_masters();
+                      while($row = $masters->fetchArray(SQLITE3_ASSOC) ){
+                        echo "<div class=\"col-md-4 col-sm-4\">
+                                <div class=\"member-item\">
+                                    <div class=\"thumb\">
+                                        <img src=\"images/team/".$row['photo']."\">
+                                    </div>
+                                    <h4>".$row['name']."</h4>
+                                </div> <!-- /.member-item -->
+                            </div> <!-- /.col-md-4 -->";
+                      }
+                    ?>
                         <div class="col-md-4 col-sm-4">
                             <div class="member-item">
                                 <div class="thumb">
@@ -192,6 +195,20 @@
 
                 <div id="menu-3" class="gallery content">
                     <div class="row">
+                      <?
+                      $ret = get_items();
+                      while($row = $ret->fetchArray(SQLITE3_ASSOC) ){
+                          echo "<div class=\"col-md-4 col-ms-6\">
+                                  <div class=\"g-item\">
+                                    <img src=\"images/gallery/\"".$row['name']." \"alt=\"\">";
+                          echo "    <a data-rel=\"lightbox\" class=\"overlay\" href=\"item?id=".$row['item_id'].">
+                                      <span>Open</span>
+                                    </a>
+                                  </div> <!-- /.g-item -->
+                                </div> <!-- /.col-md-4 -->"
+                      }
+
+                      ?>
 
                         <div class="col-md-4 col-ms-6">
                             <div class="g-item">
