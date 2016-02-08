@@ -41,7 +41,7 @@
 
         CREATE TABLE photo (
            ID INT PRIMARY KEY     NOT NULL,
-          ref char(255) NOT NULL ,
+          name char(255) NOT NULL ,
           item_id INT NOT NULL
 
         ) ;
@@ -65,6 +65,16 @@ EOF;
         }
         $db->close();
     }
+  function get_masters(){
+      $db = new MyDB();
+      if(!$db){
+          echo $db->lastErrorMsg();
+      };
+      $sql ="SELECT * from master";
+      $ret = $db->query($sql);
+      $db->close();
+      return $ret;
+  }
 
 function get_items(){
     $db = new MyDB();
@@ -74,14 +84,6 @@ function get_items(){
     $sql ="SELECT * from item i, photo p where i.id = p.item_id";
 
     $ret = $db->query($sql);
-
-    while($row = $ret->fetchArray(SQLITE3_ASSOC) ){
-        echo "ID = ". $row['ID'] . "\n";
-        echo "NAME = ". $row['NAME'] ."\n";
-        echo "ADDRESS = ". $row['ADDRESS'] ."\n";
-        echo "SALARY =  ".$row['SALARY'] ."\n\n";
-    }
-    echo "Operation done successfully\n";
     $db->close();
     return $ret;
 }
@@ -93,7 +95,7 @@ function insert_item($title, $descr, $photos){
     $sql = "INSERT INTO item (title, description) VALUES (".$title.",".$descr.")";
     $ret = $db->exec($sql);
     foreach($photos as $photo){
-      $sql ="INSERT INTO photo (ref, item_id) VALUES (".$photo['ref'].",".$ret['id'].")";
+      $sql ="INSERT INTO photo (ref, item_id) VALUES (".$photo['name'].",".$ret['id'].")";
       $ret = $db->exec($sql);
     }
 
