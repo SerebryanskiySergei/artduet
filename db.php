@@ -7,7 +7,7 @@ class MyDB extends SQLite3
   }
 }
 
-
+// Создание БД
 function db_init()
 {
   $db = new MyDB();
@@ -37,7 +37,7 @@ function db_init()
 
     CREATE TABLE photo (
     ID INT PRIMARY KEY     NOT NULL,
-    name char(255) NOT NULL ,
+    name char(255) NOT NULL,
     item_id INT NOT NULL) ;
 
     CREATE TABLE  ticket (
@@ -45,7 +45,8 @@ function db_init()
     name char(255) NOT NULL,
     email char(255) NOT NULL,
     subject char(255) NOT NULL,
-    text text NOT NULL);
+    text text NOT NULL,
+    item_id        INT    NOT NULL,);
     EOF;
 
   $ret = $db->exec($sql);
@@ -56,12 +57,13 @@ function db_init()
   }
   $db->close();
 }
+
 function insert_master($name,$email,$descr,$photo){
   $db = new MyDB();
   if(!$db){
     echo $db->lastErrorMsg();
   };
-  $sql = "INSERT INTO master (name,email,photo description) VALUES (".$name.",".$email.",".$descr.",".$photo.")";
+  $sql = "INSERT INTO master (name,email,photo,description) VALUES (".$name.",".$email.",".$photo.",".$descr.")";
   $ret = $db->exec($sql);
   if(!$ret){
     echo $db->lastErrorMsg();
@@ -89,6 +91,7 @@ function get_items(){
   $db->close();
   return $ret;
 }
+
 function insert_item($title, $descr, $photos){
   $db = new MyDB();
   if(!$db){
@@ -104,6 +107,30 @@ function insert_item($title, $descr, $photos){
     echo $db->lastErrorMsg();
   };
   $db->close();
+}
+
+function insert_comment($name,$email.$subject,$text,$item_id){
+  $db = new MyDB();
+  if(!$db){
+    echo $db->lastErrorMsg();
+  };
+  $sql = "INSERT INTO ticket (name,email,subject,text,item_id) VALUES (".$name.",".$email.",".$subject.",".$text.",".$item_id.")";
+  $ret = $db->exec($sql);
+  if(!$ret){
+    echo $db->lastErrorMsg();
+  };
+  $db->close();
+}
+
+function get_comments(){
+  $db = new MyDB();
+  if(!$db){
+    echo $db->lastErrorMsg();
+  };
+  $sql ="SELECT * from ticket t, item i p where i.id = t.item_id";
+  $ret = $db->query($sql);
+  $db->close();
+  return $ret;
 }
 
 ?>

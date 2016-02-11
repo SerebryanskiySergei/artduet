@@ -1,0 +1,160 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+  <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css" rel="stylesheet" type="text/css">
+  <link href="css/style_admin.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+
+  <div class="navbar navbar-default navbar-static-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-ex-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar">
+        </span><span class="icon-bar">
+        </span><span class="icon-bar">
+        </span>
+        </button>
+        <a class="navbar-brand" href="#"><span>Art Duet</span></a>
+      </div>
+      <div class="collapse navbar-collapse" id="navbar-ex-collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li class="active"><a href="#">Items</a></li>
+          <li><a href="#">Masters</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h1 class="text-center">Team</h1>
+          <p class="text-center">We are a group of skilled individuals.</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2">
+          <img src="http://pingendo.github.io/pingendo-bootstrap/assets/user_placeholder.png" class="img-circle img-responsive">
+        </div>
+        <div class="col-md-4">
+          <h3 class="text-left">John Doe</h3>
+          <p class="text-left">Lorem ipsum dolor sit amet, adipiscing elit Aenean commodo ligula eget.</p>
+        </div>
+        <div class="col-md-2">
+          <img src="http://pingendo.github.io/pingendo-bootstrap/assets/user_placeholder.png" class="img-circle img-responsive">
+        </div>
+        <div class="col-md-4">
+          <h3 class="text-left">John Doe</h3>
+          <p class="text-left">Lorem ipsum dolor sit amet, adipiscing elit Aenean commodo ligula eget.</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2">
+          <img src="http://pingendo.github.io/pingendo-bootstrap/assets/user_placeholder.png" class="img-circle img-responsive">
+        </div>
+        <div class="col-md-4">
+          <h3 class="text-left">John Doe</h3>
+          <p class="text-left">Lorem ipsum dolor sit amet, adipiscing elit Aenean commodo ligula eget.</p>
+        </div>
+        <div class="col-md-2">
+          <img src="http://pingendo.github.io/pingendo-bootstrap/assets/user_placeholder.png" class="img-circle img-responsive">
+        </div>
+        <div class="col-md-4 text-center">
+          <h3 class="text-left">John Doe</h3>
+          <p class="text-left">Lorem ipsum dolor sit amet, adipiscing elit Aenean commodo ligula eget.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h1>Add new master</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <form class="form-horizontal" id="masterform" role="form">
+            <div class="form-group has-feedback">
+              <div class="col-sm-2">
+                <label for="name" class="control-label">Name</label>
+              </div>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="name" name="name" placeholder="Your name" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-2">
+                <label for="email" class="control-label">Email</label>
+              </div>
+              <div class="col-sm-10">
+                <input type="email" class="form-control" id="email" name="email" placeholder="Your email" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-2">
+                <label class="control-label">Description</label>
+              </div>
+              <div class="col-sm-10">
+                <textarea class="form-control" name="description" id="description" placeholder="Info about you" required></textarea>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-2">
+                <label class="control-label">Photo</label>
+              </div>
+              <div class="col-sm-10">
+                <input name="file" multiple id="file" accept="image/*,image/jpeg" type="file" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <input type="submit" id="submit" class="btn btn-default">Add</input>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <h4 id='loading'>loading..</h4>
+  <div id="message"></div>
+  <script type="text/javascript">
+    $(document).ready(function(e) {
+          $("#masterform").on('submit', (function(e) {
+            e.preventDefault();
+            $("#message").empty();
+            $('#loading').show();
+            $.ajax({
+              url: "request.php", // Url to which the request is send
+              type: "POST", // Type of request to be send, called as method
+              data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+              contentType: false, // The content type used when sending data to the server.
+              cache: false, // To unable request pages to be cached
+              processData: false, // To send DOMDocument or non processed data file it is set to false
+              success: function(data) // A function to be called if request succeeds
+                {
+                  $('#loading').hide();
+                  $("#message").html(data);
+                }
+            });
+          }));
+        }
+  </script>
+</body>
+
+</html>
