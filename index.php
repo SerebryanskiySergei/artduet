@@ -1,5 +1,6 @@
 <?php
     require_once('db.php');
+    insert_item("Скпер майка с Доктором","Круто выглядит", array("item_1_1.jpg","item_1_2.jpg"));
 ?>
 <!DOCTYPE html>
 <!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -111,13 +112,13 @@
                     <div class="row">
                     <?
                       $masters = get_masters();
-                      while($row = $masters->fetchArray(SQLITE3_ASSOC) ){
+                      foreach($masters as $master){
                         echo "<div class=\"col-md-4 col-sm-4\">
                                 <div class=\"member-item\">
                                     <div class=\"thumb\">
-                                        <img src=\"images/team/".$row['photo']."\">
+                                        <img src=\"images/team/".$master['photo']."\">
                                     </div>
-                                    <h4>".$row['name']."</h4>
+                                    <h4>".$master['name']."</h4>
                                 </div> <!-- /.member-item -->
                             </div> <!-- /.col-md-4 -->";
                       }
@@ -196,16 +197,16 @@
                 <div id="menu-3" class="gallery content">
                     <div class="row">
                       <?
-                      $ret = get_items();
-                      while($row = $ret->fetchArray(SQLITE3_ASSOC) ){
+                      $items = get_items();
+                      foreach ($items as $item){
                           echo "<div class=\"col-md-4 col-ms-6\">
                                   <div class=\"g-item\">
-                                    <img src=\"images/gallery/\"".$row['name']." \"alt=\"\">";
-                          echo "    <a data-rel=\"lightbox\" class=\"overlay\" href=\"item?id=".$row['item_id'].">
+                                    <img src=\"images/gallery/".$item['name']."\"alt=\"\">
+                           <a data-rel=\"lightbox\" class=\"overlay\" href=\"#\">
                                       <span>Open</span>
                                     </a>
                                   </div> <!-- /.g-item -->
-                                </div> <!-- /.col-md-4 -->"
+                                </div> <!-- /.col-md-4 -->";
                       }
 
                       ?>
